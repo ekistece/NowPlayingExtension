@@ -1,0 +1,34 @@
+#!/usr/bin/env python2
+# Test build of NowPlaying
+
+import struct
+import sys
+
+fileName = ".nowPlaying"
+
+def write_file(songName):
+  f = open(fileName, "w")
+  f.write(songName)
+  f.close()
+
+# Thread that reads messages from the extension.
+def read_thread_func(queue):
+  while 1:
+    # Read the message length (first 4 bytes).
+    text_length_bytes = sys.stdin.read(4)
+
+    # Unpack message length as 4 byte integer.
+    text_length = struct.unpack('i', text_length_bytes)[0]
+
+    # Read the text (JSON object) of the message.
+    text = sys.stdin.read(text_length)
+
+    # Write to the file.
+    write_file(text.strip('"'))
+
+def Main():
+  read_thread_func(None)
+  sys.exit(0)
+
+if __name__ == '__main__':
+  Main()

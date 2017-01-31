@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "NowPlaying",
+  "description": "This extension creates a file in the user directory with the music currently playing.",
+  "version": "1.0",
+
+  "permissions": ["tabs", "nativeMessaging"],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
